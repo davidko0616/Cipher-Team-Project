@@ -1,3 +1,5 @@
+import re
+
 def get_original_text():
     return 'as df'
 
@@ -5,7 +7,8 @@ def get_shift_amount():
     return 1
 
 def remove_nonletters(input_text):
-    return 'asdf'
+    removed_letter = re.sub(r'\W+', '', input_text)
+    return removed_letter
 
 def cipher(text, shift_amount):
     return 'zxvc'
