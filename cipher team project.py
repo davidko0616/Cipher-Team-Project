@@ -1,13 +1,10 @@
 import re
+import argparse
 
 def get_original_text():
     file_path = "input.txt"
-    try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            return file.read()
-    except FileNotFoundError:
-        print(f"Error: The file '{file_path}' was not found.")
-        return ""
+    with open(file_path, "r", encoding="utf-8") as file:
+        return file.read()
 
 def get_shift_amount():
     parser = argparse.ArgumentParser(description="Caesar cipher shift amount.")
@@ -19,14 +16,30 @@ def get_shift_amount():
     return args.shift
 
 def remove_nonletters(input_text):
-    removed_letter = re.sub(r'\W+', '', input_text)
-    return removed_letter
+    return re.sub(r'[^a-zA-Z]+', '', input_text)
 
 def cipher(text, shift_amount):
-    return 'zxvc'
+    result = ""
+    count = 0
+
+    for char in text:
+        if char.isalpha():
+            if char.islower():
+                shifted = (ord(char) - ord('a') + shift_amount) % 26
+                result += chr(ord('a') + shifted)
+            else:  # uppercase
+                shifted = (ord(char) - ord('A') + shift_amount) % 26
+                result += chr(ord('A') + shifted)
+            count += 1
+            if count % 5 == 0:
+                result += " "
+
+    return result.strip()
 
 def decipher(text, shift_amount):
-    return 'asdf'
+    deciphered = cipher(text, -shift_amount)
+    clean_text = deciphered.replace(" ", "")
+    return clean_text
 
 if __name__ == '__main__':
     original_text = get_original_text()
