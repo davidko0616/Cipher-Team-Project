@@ -36,7 +36,6 @@ def cipher(text, shift_amount):
 
     return result.strip()
 
-
 def decipher(text, shift_amount):
     deciphered = cipher(text, -shift_amount)
     clean_text = deciphered.replace(" ", "")
